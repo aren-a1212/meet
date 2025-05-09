@@ -1,85 +1,131 @@
-# React + Vite
+# Meet App
+
+A serverless, progressive web application (PWA) built with React using a test-driven development (TDD) approach. This app integrates with the Google Calendar API to display upcoming events for different cities and offers data visualizations for better insights.
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Project Scenarios](#project-scenarios)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Testing](#testing)
+- [Deployment](#deployment)
+
+---
+
+## Overview
+
+**Meet App** is a React-based PWA that helps users find and explore events in various cities using the Google Calendar API. The app follows a **test-driven development (TDD)** approach and uses **serverless functions** to handle authentication securely. It supports offline functionality, mobile installation, and interactive charts for data visualization.
+
+---
 
 ## Key Features
 
-### 1. Filter Events by City
+- Filter events by city
+- Show/hide event details
+- Specify the number of events displayed
+- Offline access via service worker
+- Add shortcut to home screen (PWA)
+- Interactive charts displaying event data (scatterplot & pie chart)
 
-#### Scenario 1: When user hasn’t searched for a specific city, show upcoming events from all cities
+---
+
+## Project Scenarios
+
+### Feature 1: Filter Events by City
+
+#### Scenario 1: Display all events when no city is searched
 **GIVEN** the user hasn’t searched for any city  
 **WHEN** the user opens the app  
-**THEN** the user should see a list of upcoming events
+**THEN** the user should see a list of upcoming events from all cities
 
-#### Scenario 2: User should see a list of suggestions when they search for a city
+#### Scenario 2: Show city suggestions as user types
 **GIVEN** the main page is open  
 **WHEN** the user starts typing in the city textbox  
-**THEN** the user should receive a list of cities (suggestions) that match what they’ve typed
+**THEN** the user should receive a list of cities that match what they’ve typed
 
-#### Scenario 3: User can select a city from the suggested list
-**GIVEN** the user was typing “Berlin” in the city textbox AND the list of suggested cities is showing  
-**WHEN** the user selects a city (e.g., “Berlin, Germany”) from the list  
-**THEN** their city should be changed to that city AND the user should receive a list of upcoming events in that city
+#### Scenario 3: Select a city from the suggested list
+**GIVEN** the user was typing “Berlin” and the list of suggested cities is showing  
+**WHEN** the user selects a city (e.g., “Berlin, Germany”)  
+**THEN** the city should be set and events in that city should be displayed
 
 ---
 
-### 2. Show/Hide Event Details
+### Feature 2: Show/Hide Event Details
 
-#### Scenario 1: User wants to see event details by clicking a button
-**GIVEN** the user wanted to see event details  
+#### Scenario 1: Expand event details
+**GIVEN** the user wants to see more information about an event  
 **WHEN** they click the "Show details" button  
-**THEN** the user should see more details about the event
+**THEN** the event's details should be displayed
 
-#### Scenario 2: User wants to hide event details by clicking a button
-**GIVEN** the user wanted to see less information about an event  
-**WHEN** they click the "Hide details" button  
-**THEN** details will be hidden
-
----
-
-### 3. Specify Number of Events
-
-#### Scenario 1: User wants to specify how many events to see
-**GIVEN** the user specified a number of events  
-**WHEN** searching for events  
-**THEN** the right amount of events will be displayed
-
-#### Scenario 2: User didn’t provide a number of events
-**GIVEN** the user didn’t provide a number  
-**WHEN** they searched for events  
-**THEN** all events meeting other criteria should be displayed
+#### Scenario 2: Collapse event details
+**GIVEN** the event details are displayed  
+**WHEN** the user clicks the "Hide details" button  
+**THEN** the event's details should be hidden
 
 ---
 
-### 4. Use the App When Offline
+### Feature 3: Specify Number of Events
 
-#### Scenario 1: User wants to use the app with no internet connection
-**GIVEN** the user has previously accessed the app and stored its state  
-**WHEN** they lose internet connection  
-**THEN** the app will load the stored state for offline use
+#### Scenario 1: Set a specific number of events
+**GIVEN** the user has specified a number of events  
+**WHEN** they search for events  
+**THEN** the app should display that number of events
+
+#### Scenario 2: No number specified
+**GIVEN** the user hasn’t specified how many events to see  
+**WHEN** they search for events  
+**THEN** the app should display all matching events
 
 ---
 
-### 5. Add an App Shortcut to the Home Screen
+### Feature 4: Use the App When Offline
 
-This can be done on the users device/broswer feature and cannot be  tested by the developer.
+#### Scenario 1: Use app without internet connection
+**GIVEN** the user has previously accessed the app  
+**WHEN** they are offline  
+**THEN** the app should display the cached data and function offline
 
 ---
 
-### 6. Display Charts Visualizing Event Details
+### Feature 5: Add App Shortcut to the Home Screen
 
-#### Scenario 1: View charts on the event details page
+> This feature is managed by the browser and OS, and cannot be tested programmatically.
+
+---
+
+### Feature 6: Display Charts Visualizing Event Details
+
+#### Scenario 1: View chart on event details page
 **GIVEN** the user is on the event details page  
-**WHEN** they view the event details  
-**THEN** they should see a chart visualizing the event data
+**WHEN** they view the event  
+**THEN** a chart should be displayed visualizing event data
 
-#### Scenario 2: View charts for a specific event
+#### Scenario 2: View chart for a selected event
 **GIVEN** the user has selected a specific event  
-**WHEN** they navigate to the event details page  
-**THEN** they should see a chart that displays the event's data in a visual format
+**WHEN** they navigate to its details  
+**THEN** a chart should display the event’s data visually
 
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Tech Stack
 
-Currently, two official plugins are available:
+- React
+- AWS Lambda (serverless functions)
+- Google Calendar API + OAuth2
+- Jest & Enzyme (testing)
+- Recharts (data visualization)
+- Lighthouse (PWA compliance)
+- GitHub Pages (deployment)
+- Service Workers (offline support)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## Installation
+
+```bash
+git clone https://github.com/your-username/meet-app.git
+cd meet-app
+npm install
+npm start
