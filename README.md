@@ -104,13 +104,16 @@ A serverless, progressive web application (PWA) built with React using a test-dr
 
 ### **Feature 5: Add App Shortcut to Home Screen**
 
-**User Story:**  
+**User Story:**
 *As a user, I can add an App Shortcut to the Home Screen so I can access the app quickly.*
 
-**Scenario 1:** Prompt to add to home screen  
-- **Given** the user visits the app on a supported mobile browser  
-- **When** conditions are met (PWA criteria)  
-- **Then** the browser should prompt the user to add the app to their home screen  
+*Note: This is a browser-native feature triggered by PWA compliance. It cannot be tested through automated tests.*
+
+**Scenario 1:** Prompt to add to home screen
+
+**Given** the user visits the app on a supported mobile browser
+**When** conditions are met (PWA install criteria are fulfilled)
+**Then** the browser should prompt the user to add the app to their home screen
 
 ---
 
@@ -123,3 +126,19 @@ A serverless, progressive web application (PWA) built with React using a test-dr
 - **Given** the user is viewing the event details page  
 - **When** the event details are displayed  
 - **Then** a chart visualizing the event data should be visible  
+
+## Tech Stack
+
+- React
+- AWS Lambda (Serverless functions)
+- Google Calendar API & OAuth2
+- Recharts (for charts/visualizations)
+- Jest & Cucumber (TDD & BDD)
+- Lighthouse (PWA compliance)
+
+## Installation
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/your-username/meet-app.git
+   cd meet-app
