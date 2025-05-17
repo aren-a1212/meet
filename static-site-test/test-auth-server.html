@@ -35,7 +35,7 @@
             </p>
             <br />
             <label>Code input
-                <input id="code" type="text" value />
+                <input id="code" type="text" value="" />
             </label>
             <button id="getToken">Get Token</button>
             <p id="accessToken"></p>
@@ -54,9 +54,7 @@
      const resultElement = document.getElementById("result");
      const resultLink = document.getElementById("authURL");
      // Replace this with your own endpoint
-     const getAuthURL =
-       
-"https://90h4c2r97c.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url";
+     const getAuthURL = "https://90h4c2r97c.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url";
 
 
      getAuthUrlButton.onclick = function () {

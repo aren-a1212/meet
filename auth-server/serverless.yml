@@ -17,15 +17,6 @@ functions:
       - http:
           path: api/get-auth-url
           method: get
-          cors:
-            origin: 'http://127.0.0.1:8080' # Add your localhost
-            headers:
-              - Content-Type
-              - Authorization
-              - X-Amz-Date
-              - X-Api-Key
-              - X-Amz-Security-Token
-            allowCredentials: true
 
   getAccessToken:
     handler: handler.getAccessToken

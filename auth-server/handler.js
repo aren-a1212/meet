@@ -9,54 +9,37 @@ const redirect_uris = [
     "https://meet-zeta-ten.vercel.app"
 ];
 
-
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
     CLIENT_SECRET,
     redirect_uris[0]
 );
 
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
+    'Content-Type': 'application/json'
+};
 
 module.exports.getAuthURL = async () => {
-    /**
-     *
-     * Scopes array is passed to the `scope` option.
-     *
-     */
     const authUrl = oAuth2Client.generateAuthUrl({
         access_type: "offline",
         scope: SCOPES,
     });
 
-
-
-
-
     return {
         statusCode: 200,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Credentials': true,
-        },
         body: JSON.stringify({
             authUrl,
-            message: "Debug mode: Check the 'authUrl' field",
         }),
     };
 };
 
 module.exports.getAccessToken = async (event) => {
-    // Decode authorization code extracted from the URL query
     const code = decodeURIComponent(`${event.pathParameters.code}`);
 
 
     return new Promise((resolve, reject) => {
-        /**
-         *  Exchange authorization code for access token with a “callback” after the exchange,
-         *  The callback in this case is an arrow function with the results as parameters: “error” and “response”
-         */
-
-
         oAuth2Client.getToken(code, (error, response) => {
             if (error) {
                 return reject(error);
@@ -65,14 +48,9 @@ module.exports.getAccessToken = async (event) => {
         });
     })
         .then((results) => {
-            // Respond with OAuth token
+
             return {
                 statusCode: 200,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
-                    'Access-Control-Allow-Credentials': true,
-                },
                 body: JSON.stringify(results),
             };
         })
@@ -106,23 +84,12 @@ module.exports.getCalendarEvents = async (event) => {
         .then((results) => {
             return {
                 statusCode: 200,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
-                    'Access-Control-Allow-Credentials': true,
-                },
                 body: JSON.stringify({ events: results.data.items }),
             };
         })
         .catch((error) => {
             return {
                 statusCode: 500,
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Origin': 'http://127.0.0.1:8080',
-                    'Access-Control-Allow-Credentials': true,
-
-                },
                 body: JSON.stringify(error),
             };
         });
