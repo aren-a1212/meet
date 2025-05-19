@@ -24,21 +24,12 @@ functions:
       - http:
           path: api/token/{code}
           method: get
-          cors: 
-            origin: 'http://127.0.0.1:8080'
-            headers:
-              - Content-Type
-              - Authorization
-            allowCredentials: true
-
+         
+           
   getCalendarEvents:
     handler: handler.getCalendarEvents
     events:
       - http:
           path: api/get-events/{access_token}
           method: get
-          cors:
-            origin: 'http://127.0.0.1:8080'
-            headers:
-              - Content-Type
-            allowCredentials: true
+          
