@@ -20,7 +20,7 @@ useEffect(() => {
 
 const fetchData = async () => {
   const data       = await getEvents();               
-  const allEvents  = data[0]?.items || []; 
+  const allEvents  = data || []; 
   const filteredEvents = currentCity === "See all cities" ?
     allEvents :
     allEvents.filter(event => event.location === currentCity)
