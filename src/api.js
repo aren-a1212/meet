@@ -5,8 +5,7 @@ import mockData from './mock-data';
  */
 export const extractLocations = (events) => {
   const extractedLocations = events.map((event) => event.location);
-  const locations = [...new Set(extractedLocations)];
-  return locations;
+  return [...new Set(extractedLocations)];
 };
 
 /**
@@ -16,37 +15,48 @@ const checkToken = async (accessToken) => {
   const response = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
   );
-  const result = await response.json();
-  return result;
+  return response.json();
 };
 
 /**
  * Fetches the list of all events.
- * - On localhost: returns mockData[0].items (an array of event objects).
- * - Otherwise: runs the full OAuth → API flow.
+ * - On localhost: returns mockData[0].items
+ * - Otherwise: runs the production OAuth → API flow.
  */
 export const getEvents = async () => {
   console.log('📅 getEvents()', { href: window.location.href });
 
-  // Local/demo branch: return mock data array of event objects
+  // Local/demo: return mock events
   if (window.location.href.startsWith('http://localhost')) {
     return mockData[0].items;
   }
 
-  // Real OAuth/API branch
+  // Production: get or refresh token
   const token = await getAccessToken();
   console.log('  ↳ getEvents received token:', token);
 
+  // If we have a token, call the API gateway
   if (token) {
     removeQuery();
+
     const url =
       'https://306ud8php6.execute-api.us-east-1.amazonaws.com/dev/api/get-events/' +
       token;
-    const response = await fetch(url);
-    const result = await response.json();
-    return result?.events || [];
+    console.log('🔷 Calling get-events URL:', url);
+
+    try {
+      const response = await fetch(url);
+      console.log('🔷 Response status:', response.status);
+      const result = await response.json();
+      console.log('🔷 Result payload:', result);
+      return result?.events || [];
+    } catch (e) {
+      console.error('🔷 Error fetching events:', e);
+      return [];
+    }
   }
 
+  // No token → no events
   return [];
 };
 
@@ -63,14 +73,14 @@ export const getAccessToken = async () => {
   let accessToken = localStorage.getItem('access_token');
   const tokenCheck = accessToken && (await checkToken(accessToken));
 
-  // If no valid token, start OAuth flow or exchange code for token
+  // If there's no valid token, start or continue the OAuth flow
   if (!accessToken || tokenCheck?.error) {
     localStorage.removeItem('access_token');
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');
 
     if (!code) {
-      // No code yet: fetch auth URL and redirect
+      // No code yet → get auth URL and redirect
       const response = await fetch(
         'https://90h4c2r97c.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url'
       );
@@ -79,7 +89,7 @@ export const getAccessToken = async () => {
       return;
     }
 
-    // We have a code: exchange it for an access token
+    // We have a code → exchange it for a token
     accessToken = await getToken(code);
   }
 
@@ -87,7 +97,7 @@ export const getAccessToken = async () => {
 };
 
 /**
- * Removes OAuth query params from the URL for cleanliness.
+ * Removes OAuth query params from the URL.
  */
 const removeQuery = () => {
   let newurl;
@@ -97,11 +107,10 @@ const removeQuery = () => {
       '//' +
       window.location.host +
       window.location.pathname;
-    window.history.pushState('', '', newurl);
   } else {
     newurl = window.location.protocol + '//' + window.location.host;
-    window.history.pushState('', '', newurl);
   }
+  window.history.pushState('', '', newurl);
 };
 
 /**
