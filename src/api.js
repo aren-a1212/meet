@@ -57,19 +57,19 @@ export const getAccessToken = async () => {
   if (!accessToken || tokenCheck.error) {
     await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
-    const code = await searchParams.get("code");
+    const code =  searchParams.get("code");
     if (!code) {
       const response = await fetch(
         "https://90h4c2r97c.execute-api.us-east-2.amazonaws.com/dev/api/get-auth-url"
       );
       const result = await response.json();
       const { authUrl } = result;
-      return (window.location.href = authUrl);
+     (window.location.href = authUrl);
+     return;
     }
     return code && getToken(code);
   }
   return accessToken;
-
 };
 const removeQuery = () => {
 	let newurl;
@@ -88,7 +88,7 @@ const removeQuery = () => {
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
-    "https://90h4c2r97c.execute-api.us-east-2.amazonaws.com/dev/api/token" + '/' + encodeCode
+    "https://90h4c2r97c.execute-api.us-east-2.amazonaws.com/dev/api/token" + "/" + encodeCode
   );
   const { access_token } = await response.json();
   access_token && localStorage.setItem("access_token", access_token);
