@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, within } from '@testing-library/react';
+import { render, within, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { getEvents } from '../api';
 import App from '../App';
@@ -53,7 +53,22 @@ const allRenderedEventItems = within(EventListDOM).queryAllByRole("listitem");
 	 	allRenderedEventItems.forEach( event => {
 			expect(event.textContent).toContain("Berlin, Germany");
 		});
-
-
+    
     });
+    test('number of events in the list changes when user updates the number input', async () => {
+      const user = userEvent.setup();
+      const AppComponent = render(<App />);
+      const AppDOM = AppComponent.container.firstChild;
+  
+      const NumberOfEventsDOM = AppDOM.querySelector('#number-of-events');
+      const input = within(NumberOfEventsDOM).getByTestId('numberOfEventsInput');
+  
+      await user.type(input, '{backspace}{backspace}10');
+  
+      const EventListDOM = AppDOM.querySelector('#event-list');
+      const allRenderedEvents = within(EventListDOM).queryAllByRole('listitem');
+  
+      expect(allRenderedEvents.length).toBe(10);
+    });
+
 });

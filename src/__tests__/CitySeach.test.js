@@ -3,12 +3,14 @@ import { render,within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import App from '../App';
+import mockData from '../mock-data';
 import { extractLocations, getEvents } from '../api';
+
 
 describe('<CitySearch /> component', () => {
   let CitySearchComponent;
   beforeEach(() => {
-    CitySearchComponent = render(<CitySearch allLocations={[]}/>);
+    CitySearchComponent = render(<CitySearch allLocations={extractLocations(mockData)} setCurrentCity={() => {}}/>);
   });
  
   test('renders text input', () => {
@@ -35,7 +37,8 @@ describe('<CitySearch /> component', () => {
   test('updates list of suggestions correctly when user types in city textbox', async () => {
     const user = userEvent.setup();
     const allEvents = await getEvents();
-    const allLocations = extractLocations(allEvents[0].items);
+    const allLocations = extractLocations(allEvents);
+
     
     CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
 
@@ -55,7 +58,7 @@ describe('<CitySearch /> component', () => {
   test('renders the suggestion text in the textbox upon clicking on the suggestion', async () => {
     const user = userEvent.setup();
     const allEvents = await getEvents(); 
-    const allLocations = extractLocations(allEvents[0].items);
+    const allLocations = extractLocations(allEvents);
 
     CitySearchComponent.rerender(<CitySearch allLocations={allLocations}  setCurrentCity={() => { }}
     />)

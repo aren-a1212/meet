@@ -11,7 +11,7 @@ describe('<Event /> component', () => {
     let EventComponent;
     let allEvents;
     beforeEach(async () => {
-        allEvents = (await getEvents())[0].items;
+      allEvents = await getEvents();
       EventComponent = render(<Event event={allEvents[0]} />)
     });
 
