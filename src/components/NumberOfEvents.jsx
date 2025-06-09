@@ -7,13 +7,16 @@ const NumberOfEvents = ({ currentNOE, setCurrentNOE, setErrorAlert }) => {
 	const handleInputChanged = (event) => {
 		const value = event.target.value;
 		setNumber(value);
-		if (isNaN(value) || value <= 0) {
+
+		const num = parseInt(value, 10);
+
+		if (isNaN(num) || value <= 0) {
 			setErrorAlert("Enter a valid number");
-		} else if (value > 32) {
+		} else if (num > 32) {
 			setErrorAlert("Only maximum of 32 is allowed");
 		} else {
 			setErrorAlert("");
-			setCurrentNOE(value);
+			setCurrentNOE(num);
 		}
 	};
 
@@ -22,15 +25,15 @@ const NumberOfEvents = ({ currentNOE, setCurrentNOE, setErrorAlert }) => {
 		<div id="number-of-events">
 			<label htmlFor="numberOfEventsInput">
 				Number of Events:
-				</label>
+			</label>
 
-				<input
-					type="text"
-					value={number}
-					onChange={handleInputChanged}
-					data-testid="numberOfEventsInput"
-				/>
-		
+			<input
+				type="text"
+				value={number}
+				onChange={handleInputChanged}
+				data-testid="numberOfEventsInput"
+			/>
+
 		</div>
 	);
 };
