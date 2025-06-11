@@ -31,6 +31,12 @@ export const getEvents = async () => {
     return mockData[0].items;
   }
 
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return events ? JSON.parse(events) : [];
+  }
+
   // Production: get or refresh token
   const token = await getAccessToken();
   console.log('  ↳ getEvents received token:', token);
@@ -44,21 +50,18 @@ export const getEvents = async () => {
       token;
     console.log('🔷 Calling get-events URL:', url);
 
-    try {
+    
       const response = await fetch(url);
-      console.log('🔷 Response status:', response.status);
-      const result = await response.json();
-      console.log('🔷 Result payload:', result);
-      return result?.events || [];
-    } catch (e) {
-      console.error('🔷 Error fetching events:', e);
-      return [];
+   const result = await response.json();
+   if (result) {
+     NProgress.done();
+     localStorage.setItem("lastEvents", JSON.stringify(result.events));
+     return result.events;
+   } else return null;
     }
-  }
+  };
 
-  // No token → no events
-  return [];
-};
+
 
 /**
  * Gets or obtains a Google OAuth access token.
