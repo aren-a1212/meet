@@ -5,6 +5,7 @@ import NumberOfEvents from './components/NumberOfEvents';
 import { getEvents, extractLocations } from './api';
 import { InfoAlert as InfoAlertComponent } from './components/Alert';
 import { ErrorAlert } from './components/Alert';
+import { WarningAlert } from './components/Alert';
 import './App.css';
 
 
@@ -16,8 +17,14 @@ const App = () => {
   const [currentCity, setCurrentCity] = useState("See all cities");
   const [errorAlert, setErrorAlert] = useState("");
   const [infoAlert, setInfoAlert] = useState("");
+  const [warningAlert, setWarningAlert]= useState("");
 
   useEffect(() => {
+    if(navigator.onLine){
+      setWarningAlert("")
+    }else {
+      setWarningAlert("You are offline: showing cached events (may be out of date.)")
+    }
     fetchData();
   }, [currentCity, currentNOE]);
 
@@ -35,12 +42,14 @@ const App = () => {
     <div className='App'>
       <div className='alerts-container'>
         {infoAlert.length ? <InfoAlertComponent text={infoAlert} /> : null}
-        {errorAlert && <ErrorAlert text={errorAlert} />}
+        {errorAlert && <ErrorAlert text={errorAlert}  />}
+        {warningAlert && <WarningAlert text={warningAlert} />}
       </div>
       <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} setInfoAlert={setInfoAlert} />
       <NumberOfEvents currentNOE={currentNOE}
         setCurrentNOE={setCurrentNOE}
-        setErrorAlert={setErrorAlert} />
+        setErrorAlert={setErrorAlert} 
+        />
       <EventList events={events} />
     </div>
   );

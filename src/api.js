@@ -1,4 +1,6 @@
 import mockData from './mock-data';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 /**
  * Takes an events array and returns a deduplicated list of locations.
