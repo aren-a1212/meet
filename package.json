@@ -9,7 +9,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest",
-    "predeploy": "npm run build",
+    "build:gh": "DEPLOY_TARGET=GH_PAGES vite build",
+    "predeploy": "npm run build:gh",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

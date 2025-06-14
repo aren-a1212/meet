@@ -2,9 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa';
 
+const isGithubPages = process.env.DEPLOY_TARGET === 'GH_PAGES';
+const base = isGithubPages ? '/meet/' : '/';
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/meet/',
+  base,
   plugins: [
     react(),
     VitePWA({
