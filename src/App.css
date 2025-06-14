@@ -139,14 +139,22 @@ input[type="number"] {
 .charts-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin: 2rem 0;
-  flex: 1 1 400px;
-  height: 400px;
+  margin: 20px auto;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+.charts-container:has(> :only-child) {
+  grid-template-columns: 1fr;
+  max-width: 800px;
 }
 
 @media (max-width: 768px) {
 .charts-container > * {
-  grid-template-columns: 1fr;       
+  grid-template-columns: 1fr;
+  max-width: 600px;       
 }
 }

@@ -7,6 +7,7 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
+ 
 
 const CityEventsChart = ({ allLocations, events }) => {
   const [data, setData] = useState([]);
@@ -37,7 +38,8 @@ const CityEventsChart = ({ allLocations, events }) => {
         <CartesianGrid />
         <XAxis
           type="category" dataKey="city" name="City"
-          angle={-45} interval={0} textAnchor="end"  tick={{ dx: 20, dy: 40, fontSize: 12 }}
+          angle={60} interval={0} 
+          tick={{ dx: 20, dy: 40, fontSize: 14}}
          
         />
         <YAxis type="number" dataKey="count" name="Number of events" allowDecimals={false}  />
