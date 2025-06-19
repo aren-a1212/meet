@@ -2,9 +2,7 @@ import mockData from './mock-data';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
-/**
- * Takes an events array and returns a deduplicated list of locations.
- */
+
 export const extractLocations = (events) => {
   const extractedLocations = events.map((event) => event.location);
   return [...new Set(extractedLocations)];
@@ -26,8 +24,7 @@ const checkToken = async (accessToken) => {
  * - Otherwise: runs the production OAuth → API flow.
  */
 export const getEvents = async () => {
-  console.log('📅 getEvents()', { href: window.location.href });
-
+  
   // Local/demo: return mock events
   if (window.location.href.startsWith('http://localhost')) {
     return mockData[0].items;
@@ -41,7 +38,7 @@ export const getEvents = async () => {
 
   // Production: get or refresh token
   const token = await getAccessToken();
-  console.log('  ↳ getEvents received token:', token);
+  
 
   // If we have a token, call the API gateway
   if (token) {
@@ -50,7 +47,7 @@ export const getEvents = async () => {
     const url =
       'https://306ud8php6.execute-api.us-east-1.amazonaws.com/dev/api/get-events/' +
       token;
-    console.log('🔷 Calling get-events URL:', url);
+    
 
     
       const response = await fetch(url);

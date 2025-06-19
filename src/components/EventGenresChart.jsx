@@ -27,11 +27,11 @@ const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
     })
     return data;
   };
-  console.log('🍰 pie data →', data);
+  
  
   useEffect(() => {
     setData(getData());
-  }, [`${events}`]);
+  }, [events]);
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
