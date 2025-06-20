@@ -61,7 +61,7 @@ const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
         fill="#8884d8"
         labelLine={false}
         label={renderCustomizedLabel}
-        outerRadius={100} >
+        outerRadius={150} >
         {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={colors[index]} />
           ))}

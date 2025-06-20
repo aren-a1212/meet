@@ -30,6 +30,10 @@ const App = () => {
     fetchData();
   }, [currentCity, currentNOE]);
 
+  useEffect(() => {
+       window.dispatchEvent(new Event("resize"));
+      }, [events]);
+
   const fetchData = async () => {
     const data = await getEvents();
     const allEvents = data || [];
@@ -54,13 +58,13 @@ const App = () => {
         setErrorAlert={setErrorAlert} 
         />
         <div className="charts-container">
-       
+        <div className="chart-wrapper">
           <EventGenresChart events={events} />
-      
+         </div>
         
-        
+         <div className="chart-wrapper">
         <CityEventsChart allLocations={allLocations} events={events} />
-        
+        </div>
        
         </div>
       <EventList events={events} />
