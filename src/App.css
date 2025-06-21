@@ -137,7 +137,11 @@ input[type="number"] {
 }
 
 /* only collapse into one column if container < 300px */
-
+@media (max-width: 600px) {
+  .charts-container {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ─────────────────────────────────────────────────────
    Event Details: full-width cards & panels
