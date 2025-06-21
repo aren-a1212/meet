@@ -53,7 +53,7 @@ const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
   };
   
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="150%" height={400}>
       <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
         <Pie
         data={data}
